@@ -1,4 +1,4 @@
-// SCNetworkReachabilityKitTests SCNetworkReachabilityKitTests.m
+// SCNetworkReachabilityKit SCNetworkReachability.h
 //
 // Copyright © 2011, Roy Ratcliffe, Pioneering Software, United Kingdom
 //
@@ -22,20 +22,14 @@
 //
 //------------------------------------------------------------------------------
 
-#import "SCNetworkReachabilityKitTests.h"
-#import "SCNetworkReachabilityFlags.h"
+#import <Foundation/Foundation.h>
+#import <SystemConfiguration/SystemConfiguration.h>
 
-@implementation SCNetworkReachabilityKitTests
-
-- (void)testStringFromNetworkReachabilityFlags
+@interface SCNetworkReachability : NSObject
 {
-	STAssertEqualObjects([(NSString *)SCNetworkReachabilityCFStringCreateFromFlags(0x00000000) autorelease], @"---------", nil);
-#if TARGET_OS_IPHONE
-	STAssertEqualObjects([(NSString *)SCNetworkReachabilityCFStringCreateFromFlags(0xffffffff) autorelease], @"WdlDiCcRt", nil);
-#else
-	STAssertEqualObjects([(NSString *)SCNetworkReachabilityCFStringCreateFromFlags(0xffffffff) autorelease], @"-dlDiCcRt", nil);
-#endif
-	STAssertEqualObjects([(NSString *)SCNetworkReachabilityCFStringCreateFromFlags(kSCNetworkReachabilityFlagsReachable) autorelease], @"-------R-", nil);
+@private
+	SCNetworkReachabilityRef networkReachability;
+	BOOL isLocalAddress;
 }
 
 @end

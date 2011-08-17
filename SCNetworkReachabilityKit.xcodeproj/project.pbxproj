@@ -15,6 +15,11 @@
 		78A39FC913F94C9E00A856E2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 78A39FC713F94C9E00A856E2 /* InfoPlist.strings */; };
 		78A39FCB13F94C9E00A856E2 /* SCNetworkReachabilityKitTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 78A39FCA13F94C9E00A856E2 /* SCNetworkReachabilityKitTests.h */; };
 		78A39FCD13F94C9E00A856E2 /* SCNetworkReachabilityKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A39FCC13F94C9E00A856E2 /* SCNetworkReachabilityKitTests.m */; };
+		78A39FDA13F94D2100A856E2 /* SCNetworkReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A39FD613F94D2100A856E2 /* SCNetworkReachability.h */; };
+		78A39FDB13F94D2100A856E2 /* SCNetworkReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A39FD713F94D2100A856E2 /* SCNetworkReachability.m */; };
+		78A39FDC13F94D2100A856E2 /* SCNetworkReachabilityFlags.c in Sources */ = {isa = PBXBuildFile; fileRef = 78A39FD813F94D2100A856E2 /* SCNetworkReachabilityFlags.c */; };
+		78A39FDD13F94D2100A856E2 /* SCNetworkReachabilityFlags.h in Headers */ = {isa = PBXBuildFile; fileRef = 78A39FD913F94D2100A856E2 /* SCNetworkReachabilityFlags.h */; };
+		78A39FDF13F9510000A856E2 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78A39FDE13F9510000A856E2 /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +47,11 @@
 		78A39FC813F94C9E00A856E2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		78A39FCA13F94C9E00A856E2 /* SCNetworkReachabilityKitTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCNetworkReachabilityKitTests.h; sourceTree = "<group>"; };
 		78A39FCC13F94C9E00A856E2 /* SCNetworkReachabilityKitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCNetworkReachabilityKitTests.m; sourceTree = "<group>"; };
+		78A39FD613F94D2100A856E2 /* SCNetworkReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCNetworkReachability.h; sourceTree = "<group>"; };
+		78A39FD713F94D2100A856E2 /* SCNetworkReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCNetworkReachability.m; sourceTree = "<group>"; };
+		78A39FD813F94D2100A856E2 /* SCNetworkReachabilityFlags.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = SCNetworkReachabilityFlags.c; sourceTree = "<group>"; };
+		78A39FD913F94D2100A856E2 /* SCNetworkReachabilityFlags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCNetworkReachabilityFlags.h; sourceTree = "<group>"; };
+		78A39FDE13F9510000A856E2 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78A39FDF13F9510000A856E2 /* SystemConfiguration.framework in Frameworks */,
 				78A39FA913F94C9E00A856E2 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -69,6 +80,7 @@
 		78A39F9913F94C9E00A856E2 = {
 			isa = PBXGroup;
 			children = (
+				78A39FDE13F9510000A856E2 /* SystemConfiguration.framework */,
 				78A39FAE13F94C9E00A856E2 /* SCNetworkReachabilityKit */,
 				78A39FC413F94C9E00A856E2 /* SCNetworkReachabilityKitTests */,
 				78A39FA713F94C9E00A856E2 /* Frameworks */,
@@ -108,6 +120,10 @@
 		78A39FAE13F94C9E00A856E2 /* SCNetworkReachabilityKit */ = {
 			isa = PBXGroup;
 			children = (
+				78A39FD613F94D2100A856E2 /* SCNetworkReachability.h */,
+				78A39FD713F94D2100A856E2 /* SCNetworkReachability.m */,
+				78A39FD913F94D2100A856E2 /* SCNetworkReachabilityFlags.h */,
+				78A39FD813F94D2100A856E2 /* SCNetworkReachabilityFlags.c */,
 				78A39FAF13F94C9E00A856E2 /* Supporting Files */,
 			);
 			path = SCNetworkReachabilityKit;
@@ -149,6 +165,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78A39FDA13F94D2100A856E2 /* SCNetworkReachability.h in Headers */,
+				78A39FDD13F94D2100A856E2 /* SCNetworkReachabilityFlags.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,6 +277,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78A39FDB13F94D2100A856E2 /* SCNetworkReachability.m in Sources */,
+				78A39FDC13F94D2100A856E2 /* SCNetworkReachabilityFlags.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
