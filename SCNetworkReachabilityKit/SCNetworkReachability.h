@@ -25,11 +25,49 @@
 #import <Foundation/Foundation.h>
 #import <SystemConfiguration/SystemConfiguration.h>
 
+extern NSString *kSCNetworkReachabilityDidChangeNotification;
+extern NSString *kSCNetworkReachabilityFlagsKey;
+
 @interface SCNetworkReachability : NSObject
 {
 @private
 	SCNetworkReachabilityRef networkReachability;
-	BOOL isLocalAddress;
+	BOOL isLinkLocalInternetAddress;
 }
+
+/*
+ * Answers YES if the Network Reachability object wraps a link-local Internet
+ * address, such as a local WiFi network. This becomes YES whenever you
+ * construct an SCNetworkReachability instance using an Internet address
+ * belonging to the link-local subnet, a class B network equal to
+ * IN_LINKLOCALNETNUM.
+ *
+ * The implementation has to store a boolean value to remember whether or not
+ * the underlying SCNetworkReachabilityRef opaque object was instantiate with or
+ * without an Internet link-local address. The answer to this question alters
+ * the reachability response. This boolean would not be necessary if the System
+ * Configuration API would give access to the underlying address. You could then
+ * query the address on demand.
+ */
+@property(readonly) BOOL isLinkLocalInternetAddress;
+
+- (id)initWithAddress:(const struct sockaddr *)address;
+- (id)initWithLocalAddress:(const struct sockaddr *)localAddress remoteAddress:(const struct sockaddr *)remoteAddress;
+- (id)initWithName:(NSString *)name;
+
++ (SCNetworkReachability *)networkReachabilityForAddress:(const struct sockaddr *)address;
++ (SCNetworkReachability *)networkReachabilityForInternetAddress:(in_addr_t)internetAddress;
++ (SCNetworkReachability *)networkReachabilityForInternet;
++ (SCNetworkReachability *)networkReachabilityForLinkLocal;
+
+/*!
+ * Beware! The System Configuration framework operates synchronously by
+ * default. See Technical Q&A QA1693, Synchronous Networking On The Main
+ * Thread. Asking for flags blocks the current thread and potentially kills your
+ * iOS application if the reachability enquiry does not respond before the
+ * watchdog times out.
+ */
+- (BOOL)getFlags:(SCNetworkReachabilityFlags *)outFlags;
+- (BOOL)connectionRequired;
 
 @end

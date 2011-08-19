@@ -26,17 +26,17 @@
 
 #import <netinet/in.h>
 
+NSString *kSCNetworkReachabilityDidChangeNotification = @"SCNetworkReachabilityDidChange";
+NSString *kSCNetworkReachabilityFlagsKey = @"SCNetworkReachabilityFlags";
+
+static void SCNetworkReachabilityCallback(SCNetworkReachabilityRef networkReachability, SCNetworkReachabilityFlags flags, void *info)
+{
+	[[NSNotificationCenter defaultCenter] postNotificationName:kSCNetworkReachabilityDidChangeNotification object:info userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedInt:flags] forKey:kSCNetworkReachabilityFlagsKey]];
+}
+
 @implementation SCNetworkReachability
 
-- (id)init
-{
-	self = [super init];
-	if (self)
-	{
-		
-	}
-	return self;
-}
+@synthesize isLinkLocalInternetAddress;
 
 - (id)initWithAddress:(const struct sockaddr *)address
 {
@@ -51,7 +51,8 @@
 		}
 		else
 		{
-			isLocalAddress = address->sa_len == sizeof(struct sockaddr_in) && address->sa_family == AF_INET && IN_LINKLOCAL(ntohl(((const struct sockaddr_in *)address)->sin_addr.s_addr));
+			// http://www.opensource.apple.com/source/bootp/bootp-89/IPConfiguration.bproj/linklocal.c
+			isLinkLocalInternetAddress = address->sa_len == sizeof(struct sockaddr_in) && address->sa_family == AF_INET && IN_LINKLOCAL(ntohl(((const struct sockaddr_in *)address)->sin_addr.s_addr));
 		}
 	}
 	return self;
@@ -92,21 +93,49 @@
 	return [[[SCNetworkReachability alloc] initWithAddress:address] autorelease];
 }
 
-+ (SCNetworkReachability *)networkReachabilityForInternet
++ (SCNetworkReachability *)networkReachabilityForInternetAddress:(in_addr_t)internetAddress
 {
 	struct sockaddr_in address;
 	bzero(&address, sizeof(address));
 	address.sin_len = sizeof(address);
 	address.sin_family = AF_INET;
+	address.sin_addr.s_addr = htonl(internetAddress);
 	return [self networkReachabilityForAddress:(struct sockaddr *)&address];
 }
 
-/*!
- * Beware! The System Configuration framework operates synchronously by default. See Technical Q&A QA1693, Synchronous Networking On The Main Thread.
- */
++ (SCNetworkReachability *)networkReachabilityForInternet
+{
+	return [self networkReachabilityForInternetAddress:INADDR_ANY];
+}
+
++ (SCNetworkReachability *)networkReachabilityForLinkLocal
+{
+	return [self networkReachabilityForInternetAddress:IN_LINKLOCALNETNUM];
+}
+
 - (BOOL)getFlags:(SCNetworkReachabilityFlags *)outFlags
 {
-	return SCNetworkReachabilityGetFlags(networkReachability, outFlags) != NO;
+	return SCNetworkReachabilityGetFlags(networkReachability, outFlags) != FALSE;
+}
+
+- (BOOL)connectionRequired
+{
+	SCNetworkReachabilityFlags flags;
+	return [self getFlags:&flags] && (flags & kSCNetworkReachabilityFlagsConnectionRequired) != 0;
+}
+
+- (BOOL)startNotifier
+{
+	SCNetworkReachabilityContext context =
+	{
+		.info = self
+	};
+	return SCNetworkReachabilitySetCallback(networkReachability, SCNetworkReachabilityCallback, &context) && SCNetworkReachabilityScheduleWithRunLoop(networkReachability, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
+}
+
+- (BOOL)stopNotifier
+{
+	return SCNetworkReachabilityUnscheduleFromRunLoop(networkReachability, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
 }
 
 - (void)dealloc

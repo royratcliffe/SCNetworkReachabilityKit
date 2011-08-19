@@ -24,6 +24,7 @@
 
 #import "SCNetworkReachabilityKitTests.h"
 #import "SCNetworkReachabilityFlags.h"
+#import "SCNetworkReachability.h"
 
 @implementation SCNetworkReachabilityKitTests
 
@@ -36,6 +37,15 @@
 	STAssertEqualObjects([(NSString *)SCNetworkReachabilityCFStringCreateFromFlags(0xffffffff) autorelease], @"-dlDiCcRt", nil);
 #endif
 	STAssertEqualObjects([(NSString *)SCNetworkReachabilityCFStringCreateFromFlags(kSCNetworkReachabilityFlagsReachable) autorelease], @"-------R-", nil);
+}
+
+- (void)testLinkLocalReachability
+{
+	SCNetworkReachability *linkLocalReachability = [SCNetworkReachability networkReachabilityForLinkLocal];
+	STAssertNotNil(linkLocalReachability, nil);
+	SCNetworkReachabilityFlags flags;
+	STAssertTrue([linkLocalReachability getFlags:&flags], nil);
+	STAssertEqualObjects([(NSString *)SCNetworkReachabilityCFStringCreateFromFlags(flags) autorelease], @"-d-----R-", nil);
 }
 
 @end
