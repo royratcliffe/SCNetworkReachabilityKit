@@ -28,6 +28,18 @@
 
 @implementation SCNetworkReachabilityKitTests
 
+- (void)setUp
+{
+	linkLocalReachability = [[SCNetworkReachability networkReachabilityForLinkLocal] retain];
+	internetReachability = [[SCNetworkReachability networkReachabilityForInternet] retain];
+}
+
+- (void)tearDown
+{
+	[linkLocalReachability release];
+	[internetReachability release];
+}
+
 - (void)testStringFromNetworkReachabilityFlags
 {
 	STAssertEqualObjects([(NSString *)SCNetworkReachabilityCFStringCreateFromFlags(0x00000000) autorelease], @"---------", nil);
@@ -41,11 +53,72 @@
 
 - (void)testLinkLocalReachability
 {
-	SCNetworkReachability *linkLocalReachability = [SCNetworkReachability networkReachabilityForLinkLocal];
 	STAssertNotNil(linkLocalReachability, nil);
 	SCNetworkReachabilityFlags flags;
 	STAssertTrue([linkLocalReachability getFlags:&flags], nil);
 	STAssertEqualObjects([(NSString *)SCNetworkReachabilityCFStringCreateFromFlags(flags) autorelease], @"-d-----R-", nil);
+}
+
+- (void)testLinkLocalReachable
+{
+	STAssertEquals([linkLocalReachability networkReachableForFlags:kSCNetworkReachabilityFlagsReachable | kSCNetworkReachabilityFlagsIsDirect], (SCNetworkReachable)kSCNetworkReachableViaWiFi, nil);
+}
+
+- (void)testLinkLocalNotReachable
+{
+	STAssertEquals([linkLocalReachability networkReachableForFlags:kSCNetworkReachabilityFlagsReachable], (SCNetworkReachable)kSCNetworkNotReachable, nil);
+	STAssertEquals([linkLocalReachability networkReachableForFlags:kSCNetworkReachabilityFlagsIsDirect], (SCNetworkReachable)kSCNetworkNotReachable, nil);
+}
+
+- (void)testInternetReachability
+{
+	STAssertNotNil(internetReachability, nil);
+	SCNetworkReachabilityFlags flags;
+	STAssertTrue([internetReachability getFlags:&flags], nil);
+	STAssertEqualObjects([(NSString *)SCNetworkReachabilityCFStringCreateFromFlags(flags) autorelease], @"--l----R-", nil);
+}
+
+- (void)testInternetReachableViaWiFi
+{
+	SCNetworkReachabilityFlags reachableViaWiFiFlags[] =
+	{
+		kSCNetworkReachabilityFlagsReachable,
+		kSCNetworkReachabilityFlagsReachable | kSCNetworkReachabilityFlagsInterventionRequired,
+		
+		// The network is reachable even without connection being required and
+		// without intervention just so long as the connection is on-traffic and
+		// on-demand.
+		kSCNetworkReachabilityFlagsReachable | kSCNetworkReachabilityFlagsConnectionOnTraffic,
+		kSCNetworkReachabilityFlagsReachable | kSCNetworkReachabilityFlagsConnectionOnDemand,
+	};
+	for (NSUInteger i = 0; i < sizeof(reachableViaWiFiFlags)/sizeof(reachableViaWiFiFlags[0]); i++)
+	{
+		STAssertEquals([internetReachability networkReachableForFlags:reachableViaWiFiFlags[i]], (SCNetworkReachable)kSCNetworkReachableViaWiFi, @"Internet not reachable via wi-fi (%@)", [(NSString *)SCNetworkReachabilityCFStringCreateFromFlags(reachableViaWiFiFlags[i]) autorelease]);
+	}
+}
+
+- (void)testInternetNotReachable
+{
+	SCNetworkReachabilityFlags notReachableFlags[] =
+	{
+		// Of course, zero flags is never reachable. As a very minimum, the
+		// reachability flags must raise the Reachable flag. That makes some
+		// sense.
+		0x00000000,
+		
+		// Despite being ostensibly reachable with the Reachable flag raised,
+		// the Internet remains unreachable if the connection requires some
+		// intervention and connection is a requirement.
+		kSCNetworkReachabilityFlagsReachable | kSCNetworkReachabilityFlagsConnectionRequired | kSCNetworkReachabilityFlagsInterventionRequired,
+		kSCNetworkReachabilityFlagsReachable | kSCNetworkReachabilityFlagsConnectionRequired | kSCNetworkReachabilityFlagsInterventionRequired | kSCNetworkReachabilityFlagsConnectionOnTraffic,
+		kSCNetworkReachabilityFlagsReachable | kSCNetworkReachabilityFlagsConnectionRequired | kSCNetworkReachabilityFlagsInterventionRequired | kSCNetworkReachabilityFlagsConnectionOnDemand,
+		
+		kSCNetworkReachabilityFlagsReachable | kSCNetworkReachabilityFlagsConnectionRequired,
+	};
+	for (NSUInteger i = 0; i < sizeof(notReachableFlags)/sizeof(notReachableFlags[0]); i++)
+	{
+		STAssertEquals([internetReachability networkReachableForFlags:notReachableFlags[i]], (SCNetworkReachable)kSCNetworkNotReachable, @"Internet reachable via wi-fi (%@)", [(NSString *)SCNetworkReachabilityCFStringCreateFromFlags(notReachableFlags[i]) autorelease]);
+	}
 }
 
 @end
