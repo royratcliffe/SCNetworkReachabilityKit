@@ -51,7 +51,11 @@ static void SCNetworkReachabilityCallback(SCNetworkReachabilityRef networkReacha
 		}
 		else
 		{
-			// http://www.opensource.apple.com/source/bootp/bootp-89/IPConfiguration.bproj/linklocal.c
+			// For technical details regarding link-local connections, please
+			// see the following source file at Apple's open-source site.
+			//
+			//	http://www.opensource.apple.com/source/bootp/bootp-89/IPConfiguration.bproj/linklocal.c
+			//
 			isLinkLocalInternetAddress = address->sa_len == sizeof(struct sockaddr_in) && address->sa_family == AF_INET && IN_LINKLOCAL(ntohl(((const struct sockaddr_in *)address)->sin_addr.s_addr));
 		}
 	}
@@ -90,7 +94,7 @@ static void SCNetworkReachabilityCallback(SCNetworkReachabilityRef networkReacha
 
 + (SCNetworkReachability *)networkReachabilityForAddress:(const struct sockaddr *)address
 {
-	return [[[SCNetworkReachability alloc] initWithAddress:address] autorelease];
+	return [[[self alloc] initWithAddress:address] autorelease];
 }
 
 + (SCNetworkReachability *)networkReachabilityForInternetAddress:(in_addr_t)internetAddress
@@ -113,16 +117,23 @@ static void SCNetworkReachabilityCallback(SCNetworkReachabilityRef networkReacha
 	return [self networkReachabilityForInternetAddress:IN_LINKLOCALNETNUM];
 }
 
++ (SCNetworkReachability *)networkReachabilityForName:(NSString *)name
+{
+	return [[[self alloc] initWithName:name] autorelease];
+}
+
+//------------------------------------------------------------------------------
+#pragma mark                                      Synchronous Reachability Flags
+//------------------------------------------------------------------------------
+
 - (BOOL)getFlags:(SCNetworkReachabilityFlags *)outFlags
 {
 	return SCNetworkReachabilityGetFlags(networkReachability, outFlags) != FALSE;
 }
 
-- (BOOL)connectionRequired
-{
-	SCNetworkReachabilityFlags flags;
-	return [self getFlags:&flags] && (flags & kSCNetworkReachabilityFlagsConnectionRequired) != 0;
-}
+//------------------------------------------------------------------------------
+#pragma mark                                                       Notifications
+//------------------------------------------------------------------------------
 
 - (BOOL)startNotifier
 {
@@ -136,6 +147,73 @@ static void SCNetworkReachabilityCallback(SCNetworkReachabilityRef networkReacha
 - (BOOL)stopNotifier
 {
 	return SCNetworkReachabilityUnscheduleFromRunLoop(networkReachability, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
+}
+
+//------------------------------------------------------------------------------
+#pragma mark                                       Asynchronous Reachable Status
+//------------------------------------------------------------------------------
+
+- (SCNetworkReachable)networkReachableForFlags:(SCNetworkReachabilityFlags)flags
+{
+	SCNetworkReachable networkReachable;
+	if (isLinkLocalInternetAddress)
+	{
+		if ((flags & kSCNetworkReachabilityFlagsReachable) && (flags & kSCNetworkReachabilityFlagsIsDirect))
+		{
+			// <-- reachable AND direct
+			networkReachable = kSCNetworkReachableViaWiFi;
+		}
+		else
+		{
+			// <-- NOT reachable OR NOT direct
+			networkReachable = kSCNetworkNotReachable;
+		}
+	}
+	else
+	{
+		if ((flags & kSCNetworkReachabilityFlagsReachable))
+		{
+			// <-- reachable
+#if TARGET_OS_IPHONE
+			if ((flags & kSCNetworkReachabilityFlagsIsWWAN))
+			{
+				// <-- reachable AND is wireless wide-area network (iOS only)
+				networkReachable = kSCNetworkReachableViaWWAN;
+			}
+			else
+			{
+#endif
+				// <-- reachable AND is NOT wireless wide-area network (iOS only)
+				if ((flags & kSCNetworkReachabilityFlagsConnectionOnTraffic) || (flags & kSCNetworkReachabilityFlagsConnectionOnDemand))
+				{
+					// <-- reachable, on-traffic OR on-demand connection
+					if ((flags & kSCNetworkReachabilityFlagsInterventionRequired))
+					{
+						// <-- reachable, on-traffic OR on-demand connection, intervention required
+						networkReachable = (flags & kSCNetworkReachabilityFlagsConnectionRequired) ? kSCNetworkNotReachable : kSCNetworkReachableViaWiFi;
+					}
+					else
+					{
+						// <-- reachable, on-traffic OR on-demand connection, intervention NOT required
+						networkReachable = kSCNetworkReachableViaWiFi;
+					}
+				}
+				else
+				{
+					// <-- reachable, NOT on-traffic OR on-demand connection
+					networkReachable = (flags & kSCNetworkReachabilityFlagsConnectionRequired) ? kSCNetworkNotReachable : kSCNetworkReachableViaWiFi;
+				}
+#if TARGET_OS_IPHONE
+			}
+#endif
+		}
+		else
+		{
+			// <-- NOT reachable
+			networkReachable = kSCNetworkNotReachable;
+		}
+	}
+	return networkReachable;
 }
 
 - (void)dealloc

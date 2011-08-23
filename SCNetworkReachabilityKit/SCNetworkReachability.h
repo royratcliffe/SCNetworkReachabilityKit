@@ -28,6 +28,18 @@
 extern NSString *kSCNetworkReachabilityDidChangeNotification;
 extern NSString *kSCNetworkReachabilityFlagsKey;
 
+/*
+ * Reachable via WWAN only occurs on iOS platforms.
+ */
+enum
+{
+	kSCNetworkNotReachable,
+	kSCNetworkReachableViaWiFi,
+	kSCNetworkReachableViaWWAN,
+};
+
+typedef NSUInteger SCNetworkReachable;
+
 @interface SCNetworkReachability : NSObject
 {
 @private
@@ -37,7 +49,7 @@ extern NSString *kSCNetworkReachabilityFlagsKey;
 
 /*
  * Answers YES if the Network Reachability object wraps a link-local Internet
- * address, such as a local WiFi network. This becomes YES whenever you
+ * address, such as a local wi-fi network. This becomes YES whenever you
  * construct an SCNetworkReachability instance using an Internet address
  * belonging to the link-local subnet, a class B network equal to
  * IN_LINKLOCALNETNUM.
@@ -59,8 +71,12 @@ extern NSString *kSCNetworkReachabilityFlagsKey;
 + (SCNetworkReachability *)networkReachabilityForInternetAddress:(in_addr_t)internetAddress;
 + (SCNetworkReachability *)networkReachabilityForInternet;
 + (SCNetworkReachability *)networkReachabilityForLinkLocal;
++ (SCNetworkReachability *)networkReachabilityForName:(NSString *)name;
 
 /*!
+ * Acquires the current network reachability flags, answering YES if
+ * successfully acquired; answering NO otherwise.
+ *
  * Beware! The System Configuration framework operates synchronously by
  * default. See Technical Q&A QA1693, Synchronous Networking On The Main
  * Thread. Asking for flags blocks the current thread and potentially kills your
@@ -68,6 +84,22 @@ extern NSString *kSCNetworkReachabilityFlagsKey;
  * watchdog times out.
  */
 - (BOOL)getFlags:(SCNetworkReachabilityFlags *)outFlags;
-- (BOOL)connectionRequired;
+
+- (BOOL)startNotifier;
+- (BOOL)stopNotifier;
+
+/*!
+ * Interprets the given network reachability flags, answering one of three
+ * reachable conclusions: not reachable, reachable via wi-fi or reachable via
+ * wireless wide-area network.
+ *
+ * The method translates the given combination of reachability flags within the
+ * context of this network reachability object. The flags originate from
+ * -getFlags:outFlags or from a reachability notification, where you can extract
+ * the up-to-date flags by sending -[NSNotification userInfo] and asking for the
+ * kSCNetworkReachabilityFlagsKey. The key returns an NSNumber whose unsigned
+ * integer value gives the flags.
+ */
+- (SCNetworkReachable)networkReachableForFlags:(SCNetworkReachabilityFlags)flags;
 
 @end
