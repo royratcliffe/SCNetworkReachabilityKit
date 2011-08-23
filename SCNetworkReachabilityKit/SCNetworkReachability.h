@@ -28,7 +28,7 @@
 extern NSString *kSCNetworkReachabilityDidChangeNotification;
 extern NSString *kSCNetworkReachabilityFlagsKey;
 
-/*
+/*!
  * Reachable via WWAN only occurs on iOS platforms.
  */
 enum
@@ -47,7 +47,7 @@ typedef NSUInteger SCNetworkReachable;
 	BOOL isLinkLocalInternetAddress;
 }
 
-/*
+/*!
  * Answers YES if the Network Reachability object wraps a link-local Internet
  * address, such as a local wi-fi network. This becomes YES whenever you
  * construct an SCNetworkReachability instance using an Internet address
