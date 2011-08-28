@@ -23,9 +23,7 @@
 		78C9F25614026297000F99CC /* SCNetworkReachabilityKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 78C9F25514026297000F99CC /* SCNetworkReachabilityKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		78C9F2A614029AFD000F99CC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C9F2A514029AFD000F99CC /* Foundation.framework */; };
 		78C9F2B314029AFD000F99CC /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78A39FBE13F94C9E00A856E2 /* SenTestingKit.framework */; };
-		78C9F2B514029AFD000F99CC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C9F2B414029AFD000F99CC /* UIKit.framework */; };
 		78C9F2B614029AFD000F99CC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C9F2A514029AFD000F99CC /* Foundation.framework */; };
-		78C9F2B814029AFE000F99CC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C9F2B714029AFD000F99CC /* CoreGraphics.framework */; };
 		78C9F2C114029AFE000F99CC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 78C9F2BF14029AFE000F99CC /* InfoPlist.strings */; };
 		78C9F2CC14029C47000F99CC /* SCNetworkReachabilityKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A39FCC13F94C9E00A856E2 /* SCNetworkReachabilityKitTests.m */; };
 		78C9F2CD14029C52000F99CC /* SCNetworkReachabilityKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 78C9F25514026297000F99CC /* SCNetworkReachabilityKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -79,8 +77,6 @@
 		78C9F2A514029AFD000F99CC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		78C9F2A914029AFD000F99CC /* SCNetworkReachability-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SCNetworkReachability-Prefix.pch"; sourceTree = "<group>"; };
 		78C9F2B214029AFD000F99CC /* SCNetworkReachabilityTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SCNetworkReachabilityTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		78C9F2B414029AFD000F99CC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		78C9F2B714029AFD000F99CC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		78C9F2BE14029AFE000F99CC /* SCNetworkReachabilityTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SCNetworkReachabilityTests-Info.plist"; sourceTree = "<group>"; };
 		78C9F2C014029AFE000F99CC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		78C9F2D414029CBF000F99CC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
@@ -121,9 +117,7 @@
 				78C9F2D614029D00000F99CC /* libSCNetworkReachabilityKit.a in Frameworks */,
 				78C9F2D514029CBF000F99CC /* SystemConfiguration.framework in Frameworks */,
 				78C9F2B314029AFD000F99CC /* SenTestingKit.framework in Frameworks */,
-				78C9F2B514029AFD000F99CC /* UIKit.framework in Frameworks */,
 				78C9F2B614029AFD000F99CC /* Foundation.framework in Frameworks */,
-				78C9F2B814029AFE000F99CC /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,13 +127,12 @@
 		78A39F9913F94C9E00A856E2 = {
 			isa = PBXGroup;
 			children = (
-				78C9F2D414029CBF000F99CC /* SystemConfiguration.framework */,
-				78A39FDE13F9510000A856E2 /* SystemConfiguration.framework */,
 				78A39FAE13F94C9E00A856E2 /* SCNetworkReachabilityKit */,
 				78A39FC413F94C9E00A856E2 /* SCNetworkReachabilityKitTests */,
 				78C9F2A714029AFD000F99CC /* SCNetworkReachability */,
 				78C9F2BC14029AFE000F99CC /* SCNetworkReachabilityTests */,
-				78A39FA713F94C9E00A856E2 /* Frameworks */,
+				78A39FA713F94C9E00A856E2 /* Mac OS X Frameworks */,
+				78FC5858140A9A4C00366F6B /* iOS Frameworks */,
 				78A39FA613F94C9E00A856E2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -155,17 +148,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		78A39FA713F94C9E00A856E2 /* Frameworks */ = {
+		78A39FA713F94C9E00A856E2 /* Mac OS X Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				78A39FA813F94C9E00A856E2 /* Cocoa.framework */,
 				78A39FBE13F94C9E00A856E2 /* SenTestingKit.framework */,
 				78C9F2A514029AFD000F99CC /* Foundation.framework */,
-				78C9F2B414029AFD000F99CC /* UIKit.framework */,
-				78C9F2B714029AFD000F99CC /* CoreGraphics.framework */,
+				78A39FDE13F9510000A856E2 /* SystemConfiguration.framework */,
 				78A39FAA13F94C9E00A856E2 /* Other Frameworks */,
 			);
-			name = Frameworks;
+			name = "Mac OS X Frameworks";
 			sourceTree = "<group>";
 		};
 		78A39FAA13F94C9E00A856E2 /* Other Frameworks */ = {
@@ -251,6 +243,14 @@
 				78C9F2BF14029AFE000F99CC /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		78FC5858140A9A4C00366F6B /* iOS Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				78C9F2D414029CBF000F99CC /* SystemConfiguration.framework */,
+			);
+			name = "iOS Frameworks";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
