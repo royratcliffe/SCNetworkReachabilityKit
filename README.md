@@ -1,6 +1,6 @@
 # System Configuration Network Reachability Kit
 
-SCNetworkReachabilityKit provides Objective-C wrappers for the network reachability API found in Apple's System Configuration framework.
+SCNetworkReachabilityKit provides Objective-C wrappers for the network reachability API found in Apple's System Configuration framework. You can find an iOS-based sample application at [GitHub](https://github.com/royratcliffe/SCNetworkReachability).
 
 ## Aims and Objectives
 
