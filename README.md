@@ -12,7 +12,7 @@ The project incorporates two targets: an OS X framework and an iOS static librar
 
 The SCNetworkReachabilityKit is largely based on Apple's open-source sample project “Reachability.” Apple's sample does not however properly handle cross-platform compilation. It assumes an iOS platform. Consequently, compiling for OS X fails.
 
-In addition, Apple's sample does not include any unit testing, nor _directly_ addresses the threading issue. Apple's SystemConfiguration.framework is entirely synchronous. That means asking for the network reachability flags blocks the current thread until reachability resolves. This may take a second or two--within range to trigger the iOS watchdog.
+In addition, Apple's sample does not include any unit testing, nor _directly_ addresses the threading issue. Apple's SystemConfiguration.framework is entirely synchronous. That means asking for the network reachability flags blocks the current thread until reachability resolves. This may take a second or two—within range to trigger the iOS watchdog.
 
 Much better if reachability notifies the application. The framework provides such an interface. However, the sample code does not let you use the notification-supplied reachability flags; you still need to invoke the blocking method.
 
