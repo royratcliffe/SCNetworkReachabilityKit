@@ -25,8 +25,8 @@
 #import <Foundation/Foundation.h>
 #import <SystemConfiguration/SystemConfiguration.h>
 
-extern NSString *kSCNetworkReachabilityDidChangeNotification;
-extern NSString *kSCNetworkReachabilityFlagsKey;
+extern NSString *const kSCNetworkReachabilityDidChangeNotification;
+extern NSString *const kSCNetworkReachabilityFlagsKey;
 
 /*!
  * Reachable via WWAN only occurs on iOS platforms.
@@ -41,11 +41,8 @@ enum
 typedef NSUInteger SCNetworkReachable;
 
 @interface SCNetworkReachability : NSObject
-{
-@private
-	SCNetworkReachabilityRef networkReachability;
-	BOOL isLinkLocalInternetAddress;
-}
+
+@property(readonly, NS_NONATOMIC_IOSONLY) SCNetworkReachabilityRef networkReachability;
 
 /*!
  * Answers YES if the Network Reachability object wraps a link-local Internet
@@ -61,7 +58,7 @@ typedef NSUInteger SCNetworkReachable;
  * Configuration API would give access to the underlying address. You could then
  * query the address on demand.
  */
-@property(readonly) BOOL isLinkLocalInternetAddress;
+@property(readonly, NS_NONATOMIC_IOSONLY) BOOL isLinkLocalInternetAddress;
 
 - (id)initWithAddress:(const struct sockaddr *)address;
 - (id)initWithLocalAddress:(const struct sockaddr *)localAddress remoteAddress:(const struct sockaddr *)remoteAddress;

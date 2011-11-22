@@ -26,27 +26,27 @@
 
 #import <netinet/in.h>
 
-NSString *kSCNetworkReachabilityDidChangeNotification = @"SCNetworkReachabilityDidChange";
-NSString *kSCNetworkReachabilityFlagsKey = @"SCNetworkReachabilityFlags";
+NSString *const kSCNetworkReachabilityDidChangeNotification = @"SCNetworkReachabilityDidChange";
+NSString *const kSCNetworkReachabilityFlagsKey = @"SCNetworkReachabilityFlags";
 
 static void SCNetworkReachabilityCallback(SCNetworkReachabilityRef networkReachability, SCNetworkReachabilityFlags flags, void *info)
 {
-	[[NSNotificationCenter defaultCenter] postNotificationName:kSCNetworkReachabilityDidChangeNotification object:info userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedInt:flags] forKey:kSCNetworkReachabilityFlagsKey]];
+	[[NSNotificationCenter defaultCenter] postNotificationName:kSCNetworkReachabilityDidChangeNotification object:(__bridge_transfer SCNetworkReachability *)info userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedInt:flags] forKey:kSCNetworkReachabilityFlagsKey]];
 }
 
 @implementation SCNetworkReachability
 
-@synthesize isLinkLocalInternetAddress;
+@synthesize networkReachability        = _networkReachability;
+@synthesize isLinkLocalInternetAddress = _isLinkLocalInternetAddress;
 
 - (id)initWithAddress:(const struct sockaddr *)address
 {
 	self = [super init];
 	if (self)
 	{
-		networkReachability = SCNetworkReachabilityCreateWithAddress(kCFAllocatorDefault, address);
-		if (networkReachability == NULL)
+		_networkReachability = SCNetworkReachabilityCreateWithAddress(kCFAllocatorDefault, address);
+		if (_networkReachability == NULL)
 		{
-			[self release];
 			self = nil;
 		}
 		else
@@ -56,7 +56,7 @@ static void SCNetworkReachabilityCallback(SCNetworkReachabilityRef networkReacha
 			//
 			//	http://www.opensource.apple.com/source/bootp/bootp-89/IPConfiguration.bproj/linklocal.c
 			//
-			isLinkLocalInternetAddress = address->sa_len == sizeof(struct sockaddr_in) && address->sa_family == AF_INET && IN_LINKLOCAL(ntohl(((const struct sockaddr_in *)address)->sin_addr.s_addr));
+			_isLinkLocalInternetAddress = address->sa_len == sizeof(struct sockaddr_in) && address->sa_family == AF_INET && IN_LINKLOCAL(ntohl(((const struct sockaddr_in *)address)->sin_addr.s_addr));
 		}
 	}
 	return self;
@@ -67,10 +67,9 @@ static void SCNetworkReachabilityCallback(SCNetworkReachabilityRef networkReacha
 	self = [super init];
 	if (self)
 	{
-		networkReachability = SCNetworkReachabilityCreateWithAddressPair(kCFAllocatorDefault, localAddress, remoteAddress);
-		if (networkReachability == NULL)
+		_networkReachability = SCNetworkReachabilityCreateWithAddressPair(kCFAllocatorDefault, localAddress, remoteAddress);
+		if (_networkReachability == NULL)
 		{
-			[self release];
 			self = nil;
 		}
 	}
@@ -82,10 +81,9 @@ static void SCNetworkReachabilityCallback(SCNetworkReachabilityRef networkReacha
 	self = [super init];
 	if (self)
 	{
-		networkReachability = SCNetworkReachabilityCreateWithName(kCFAllocatorDefault, [name UTF8String]);
-		if (networkReachability == NULL)
+		_networkReachability = SCNetworkReachabilityCreateWithName(kCFAllocatorDefault, [name UTF8String]);
+		if (_networkReachability == NULL)
 		{
-			[self release];
 			self = nil;
 		}
 	}
@@ -94,7 +92,7 @@ static void SCNetworkReachabilityCallback(SCNetworkReachabilityRef networkReacha
 
 + (SCNetworkReachability *)networkReachabilityForAddress:(const struct sockaddr *)address
 {
-	return [[[self alloc] initWithAddress:address] autorelease];
+	return [[self alloc] initWithAddress:address];
 }
 
 + (SCNetworkReachability *)networkReachabilityForInternetAddress:(in_addr_t)internetAddress
@@ -119,7 +117,7 @@ static void SCNetworkReachabilityCallback(SCNetworkReachabilityRef networkReacha
 
 + (SCNetworkReachability *)networkReachabilityForName:(NSString *)name
 {
-	return [[[self alloc] initWithName:name] autorelease];
+	return [[self alloc] initWithName:name];
 }
 
 //------------------------------------------------------------------------------
@@ -128,7 +126,7 @@ static void SCNetworkReachabilityCallback(SCNetworkReachabilityRef networkReacha
 
 - (BOOL)getFlags:(SCNetworkReachabilityFlags *)outFlags
 {
-	return SCNetworkReachabilityGetFlags(networkReachability, outFlags) != FALSE;
+	return SCNetworkReachabilityGetFlags(_networkReachability, outFlags) != FALSE;
 }
 
 //------------------------------------------------------------------------------
@@ -139,14 +137,14 @@ static void SCNetworkReachabilityCallback(SCNetworkReachabilityRef networkReacha
 {
 	SCNetworkReachabilityContext context =
 	{
-		.info = self
+		.info = (__bridge_retained void *)self
 	};
-	return SCNetworkReachabilitySetCallback(networkReachability, SCNetworkReachabilityCallback, &context) && SCNetworkReachabilityScheduleWithRunLoop(networkReachability, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
+	return SCNetworkReachabilitySetCallback(_networkReachability, SCNetworkReachabilityCallback, &context) && SCNetworkReachabilityScheduleWithRunLoop(_networkReachability, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
 }
 
 - (BOOL)stopNotifier
 {
-	return SCNetworkReachabilityUnscheduleFromRunLoop(networkReachability, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
+	return SCNetworkReachabilityUnscheduleFromRunLoop(_networkReachability, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
 }
 
 //------------------------------------------------------------------------------
@@ -156,7 +154,7 @@ static void SCNetworkReachabilityCallback(SCNetworkReachabilityRef networkReacha
 - (SCNetworkReachable)networkReachableForFlags:(SCNetworkReachabilityFlags)flags
 {
 	SCNetworkReachable networkReachable;
-	if (isLinkLocalInternetAddress)
+	if (_isLinkLocalInternetAddress)
 	{
 		if ((flags & kSCNetworkReachabilityFlagsReachable) && (flags & kSCNetworkReachabilityFlagsIsDirect))
 		{
@@ -218,12 +216,11 @@ static void SCNetworkReachabilityCallback(SCNetworkReachabilityRef networkReacha
 
 - (void)dealloc
 {
-	if (networkReachability)
+	if (_networkReachability)
 	{
-		CFRelease(networkReachability);
-		networkReachability = NULL;
+		CFRelease(_networkReachability);
+		_networkReachability = NULL;
 	}
-	[super dealloc];
 }
 
 @end
