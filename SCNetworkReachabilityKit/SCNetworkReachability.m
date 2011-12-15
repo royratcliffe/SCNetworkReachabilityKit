@@ -31,7 +31,7 @@ NSString *const kSCNetworkReachabilityFlagsKey = @"SCNetworkReachabilityFlags";
 
 static void SCNetworkReachabilityCallback(SCNetworkReachabilityRef networkReachability, SCNetworkReachabilityFlags flags, void *info)
 {
-	[[NSNotificationCenter defaultCenter] postNotificationName:kSCNetworkReachabilityDidChangeNotification object:(__bridge_transfer SCNetworkReachability *)info userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedInt:flags] forKey:kSCNetworkReachabilityFlagsKey]];
+	[[NSNotificationCenter defaultCenter] postNotificationName:kSCNetworkReachabilityDidChangeNotification object:(__bridge SCNetworkReachability *)info userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedInt:flags] forKey:kSCNetworkReachabilityFlagsKey]];
 }
 
 @implementation SCNetworkReachability
@@ -135,9 +135,13 @@ static void SCNetworkReachabilityCallback(SCNetworkReachabilityRef networkReacha
 
 - (BOOL)startNotifier
 {
+	// Do not retain or transfer the SCNetworkReachability instance while
+	// bridging. Doing so alters the retain count and creates an unwanted retain
+	// cycle between the Network Reachability wrapper and the underlying
+	// SCNetworkReachabilityRef opaque implementation.
 	SCNetworkReachabilityContext context =
 	{
-		.info = (__bridge_retained void *)self
+		.info = (__bridge void *)self
 	};
 	return SCNetworkReachabilitySetCallback(_networkReachability, SCNetworkReachabilityCallback, &context) && SCNetworkReachabilityScheduleWithRunLoop(_networkReachability, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
 }
