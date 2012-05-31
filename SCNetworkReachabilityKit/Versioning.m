@@ -1,6 +1,6 @@
-/* SCNetworkReachabilityKit SCNetworkReachabilityKit.h
+/* SCNetworkReachabilityKit Versioning.m
  *
- * Copyright © 2011, Roy Ratcliffe, Pioneering Software, United Kingdom
+ * Copyright © 2012, Roy Ratcliffe, Pioneering Software, United Kingdom
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the “Software”), to deal
@@ -22,6 +22,17 @@
  *
  ******************************************************************************/
 
-#import <SCNetworkReachabilityKit/SCNetworkReachability.h>
-#import <SCNetworkReachabilityKit/SCNetworkReachabilityFlags.h>
-#import <SCNetworkReachabilityKit/Versioning.h>
+#import "Versioning.h"
+
+NSString *SCNetworkReachabilityKitVersionString()
+{
+	// The implementation assumes that the raw C-language version string
+	// terminates with null. It also trims assuming that the very last character
+	// is a terminating line feed. Also assumes UTF-8 encoding.
+	static NSString *__strong versionString;
+	if (versionString == nil)
+	{
+		versionString = [[NSString stringWithCString:(const char *)kSCNetworkReachabilityKitVersionString encoding:NSUTF8StringEncoding] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+	}
+	return versionString;
+}

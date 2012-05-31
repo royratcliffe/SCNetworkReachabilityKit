@@ -1,6 +1,6 @@
-/* SCNetworkReachabilityKit SCNetworkReachabilityKit.h
+/* SCNetworkReachabilityKit Versioning.h
  *
- * Copyright © 2011, Roy Ratcliffe, Pioneering Software, United Kingdom
+ * Copyright © 2012, Roy Ratcliffe, Pioneering Software, United Kingdom
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the “Software”), to deal
@@ -22,6 +22,15 @@
  *
  ******************************************************************************/
 
-#import <SCNetworkReachabilityKit/SCNetworkReachability.h>
-#import <SCNetworkReachabilityKit/SCNetworkReachabilityFlags.h>
-#import <SCNetworkReachabilityKit/Versioning.h>
+#import <Foundation/Foundation.h>
+
+extern const unsigned char kSCNetworkReachabilityKitVersionString[];
+extern const double kSCNetworkReachabilityKitVersionNumber;
+
+/*!
+ * Answers the current Apple-generic versioning-formatted version string. The
+ * version string has been trimmed. It has no leading or trailing whitespace or
+ * newlines. Note that the raw C-based version string contrastingly has a single
+ * terminating newline character.
+ */
+NSString *SCNetworkReachabilityKitVersionString(void);

@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		783DAD12157791C100BA8C4D /* VersioningTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 783DAD11157791C100BA8C4D /* VersioningTests.m */; };
+		783DAD13157791C100BA8C4D /* VersioningTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 783DAD11157791C100BA8C4D /* VersioningTests.m */; };
+		783DAD161577938500BA8C4D /* Versioning.h in Headers */ = {isa = PBXBuildFile; fileRef = 783DAD141577938500BA8C4D /* Versioning.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		783DAD171577938500BA8C4D /* Versioning.h in Headers */ = {isa = PBXBuildFile; fileRef = 783DAD141577938500BA8C4D /* Versioning.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		783DAD181577938500BA8C4D /* Versioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 783DAD151577938500BA8C4D /* Versioning.m */; };
+		783DAD191577938500BA8C4D /* Versioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 783DAD151577938500BA8C4D /* Versioning.m */; };
 		78A39FA913F94C9E00A856E2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78A39FA813F94C9E00A856E2 /* Cocoa.framework */; };
 		78A39FB313F94C9E00A856E2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 78A39FB113F94C9E00A856E2 /* InfoPlist.strings */; };
 		78A39FBF13F94C9E00A856E2 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78A39FBE13F94C9E00A856E2 /* SenTestingKit.framework */; };
@@ -53,6 +59,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		783DAD10157791C100BA8C4D /* VersioningTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersioningTests.h; sourceTree = "<group>"; };
+		783DAD11157791C100BA8C4D /* VersioningTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersioningTests.m; sourceTree = "<group>"; };
+		783DAD141577938500BA8C4D /* Versioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Versioning.h; sourceTree = "<group>"; };
+		783DAD151577938500BA8C4D /* Versioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Versioning.m; sourceTree = "<group>"; };
 		78A39FA513F94C9E00A856E2 /* SCNetworkReachabilityKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SCNetworkReachabilityKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		78A39FA813F94C9E00A856E2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		78A39FAB13F94C9E00A856E2 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -186,6 +196,8 @@
 		78A39FAF13F94C9E00A856E2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				783DAD141577938500BA8C4D /* Versioning.h */,
+				783DAD151577938500BA8C4D /* Versioning.m */,
 				78A39FB013F94C9E00A856E2 /* SCNetworkReachabilityKit-Info.plist */,
 				78A39FB113F94C9E00A856E2 /* InfoPlist.strings */,
 				78A39FB413F94C9E00A856E2 /* SCNetworkReachabilityKit-Prefix.pch */,
@@ -206,6 +218,8 @@
 		78A39FC513F94C9E00A856E2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				783DAD10157791C100BA8C4D /* VersioningTests.h */,
+				783DAD11157791C100BA8C4D /* VersioningTests.m */,
 				78A39FC613F94C9E00A856E2 /* SCNetworkReachabilityKitTests-Info.plist */,
 				78A39FC713F94C9E00A856E2 /* InfoPlist.strings */,
 			);
@@ -263,6 +277,7 @@
 				78A39FDA13F94D2100A856E2 /* SCNetworkReachability.h in Headers */,
 				78A39FDD13F94D2100A856E2 /* SCNetworkReachabilityFlags.h in Headers */,
 				78C9F25614026297000F99CC /* SCNetworkReachabilityKit.h in Headers */,
+				783DAD161577938500BA8C4D /* Versioning.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,6 +288,7 @@
 				78C9F2CD14029C52000F99CC /* SCNetworkReachabilityKit.h in Headers */,
 				78C9F2CE14029C52000F99CC /* SCNetworkReachability.h in Headers */,
 				78C9F2D014029C52000F99CC /* SCNetworkReachabilityFlags.h in Headers */,
+				783DAD171577938500BA8C4D /* Versioning.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,6 +461,7 @@
 			files = (
 				78A39FDB13F94D2100A856E2 /* SCNetworkReachability.m in Sources */,
 				78A39FDC13F94D2100A856E2 /* SCNetworkReachabilityFlags.c in Sources */,
+				783DAD181577938500BA8C4D /* Versioning.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,6 +470,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				78A39FCD13F94C9E00A856E2 /* SCNetworkReachabilityKitTests.m in Sources */,
+				783DAD12157791C100BA8C4D /* VersioningTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,6 +480,7 @@
 			files = (
 				78C9F2CF14029C52000F99CC /* SCNetworkReachability.m in Sources */,
 				78C9F2D114029C52000F99CC /* SCNetworkReachabilityFlags.c in Sources */,
+				783DAD191577938500BA8C4D /* Versioning.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,6 +489,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				78C9F2CC14029C47000F99CC /* SCNetworkReachabilityKitTests.m in Sources */,
+				783DAD13157791C100BA8C4D /* VersioningTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -522,6 +542,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 16.6;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -539,6 +560,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = k;
 			};
 			name = Debug;
 		};
@@ -548,6 +571,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 16.6;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -558,6 +582,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = k;
 			};
 			name = Release;
 		};
@@ -567,7 +593,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJCPP_ARC_ABI = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 16.6;
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SCNetworkReachabilityKit/SCNetworkReachabilityKit-Prefix.pch";
@@ -583,7 +609,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJCPP_ARC_ABI = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 16.6;
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SCNetworkReachabilityKit/SCNetworkReachabilityKit-Prefix.pch";
@@ -600,6 +626,12 @@
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SCNetworkReachabilityKit/SCNetworkReachabilityKit-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = (
+					"PROJECT_NAME_STRING=\"\\\"$(PROJECT_NAME)\\\"\"",
+					"CURRENT_PROJECT_VERSION_STRING=\"\\\"$(CURRENT_PROJECT_VERSION)\\\"\"",
+					"CURRENT_PROJECT_VERSION=$(CURRENT_PROJECT_VERSION)",
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "SCNetworkReachabilityKitTests/SCNetworkReachabilityKitTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = octest;
@@ -613,6 +645,12 @@
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SCNetworkReachabilityKit/SCNetworkReachabilityKit-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = (
+					"PROJECT_NAME_STRING=\"\\\"$(PROJECT_NAME)\\\"\"",
+					"CURRENT_PROJECT_VERSION_STRING=\"\\\"$(CURRENT_PROJECT_VERSION)\\\"\"",
+					"CURRENT_PROJECT_VERSION=$(CURRENT_PROJECT_VERSION)",
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "SCNetworkReachabilityKitTests/SCNetworkReachabilityKitTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = octest;
@@ -663,6 +701,12 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SCNetworkReachability/SCNetworkReachability-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = (
+					"PROJECT_NAME_STRING=\"\\\"$(PROJECT_NAME)\\\"\"",
+					"CURRENT_PROJECT_VERSION_STRING=\"\\\"$(CURRENT_PROJECT_VERSION)\\\"\"",
+					"CURRENT_PROJECT_VERSION=$(CURRENT_PROJECT_VERSION)",
+					"$(inherited)",
+				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "SCNetworkReachabilityTests/SCNetworkReachabilityTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -682,6 +726,12 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SCNetworkReachability/SCNetworkReachability-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = (
+					"PROJECT_NAME_STRING=\"\\\"$(PROJECT_NAME)\\\"\"",
+					"CURRENT_PROJECT_VERSION_STRING=\"\\\"$(CURRENT_PROJECT_VERSION)\\\"\"",
+					"CURRENT_PROJECT_VERSION=$(CURRENT_PROJECT_VERSION)",
+					"$(inherited)",
+				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "SCNetworkReachabilityTests/SCNetworkReachabilityTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
