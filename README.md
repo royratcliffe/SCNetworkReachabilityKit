@@ -40,6 +40,8 @@ For example, set up your app delegate or other controller for detecting general 
 Your controller can then handle the notifications about Internet reachability like this.
 
 ```objective-c
+- (void)internetReachabilityDidChange:(NSNotification *)notification
+{
 	// Turn reachability flags into a localised string, something that the
 	// interface can display for the user.
 	SCNetworkReachability *reachability = [notification object];
@@ -61,6 +63,7 @@ Your controller can then handle the notifications about Internet reachability li
 		default:
 			reachableString = nil;
 	}
+}
 ```
 
 ### Linking With iOS Apps
