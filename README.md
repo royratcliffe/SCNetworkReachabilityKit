@@ -20,6 +20,11 @@ For example, set up your app delegate or other controller for detecting general 
 	[center addObserver:self
 			   selector:@selector(internetReachabilityDidChange:)
 				   name:kSCNetworkReachabilityDidChangeNotification object:nil];
+	
+	// Before starting up the notifications, ask for the reachability flags,
+	// waiting if necessary. Post a notification with the initial reachability
+	// flags if available. This first request for flags blocks the calling
+	// thread.
 	SCNetworkReachabilityFlags flags;
 	if ([internetReachability getFlags:&flags])
 	{
@@ -35,6 +40,8 @@ For example, set up your app delegate or other controller for detecting general 
 Your controller can then handle the notifications about Internet reachability like this.
 
 ```objective-c
+	// Turn reachability flags into a localised string, something that the
+	// interface can display for the user.
 	SCNetworkReachability *reachability = [notification object];
 	NSNumber *flagsNumber = [[notification userInfo] objectForKey:kSCNetworkReachabilityFlagsKey];
 	SCNetworkReachabilityFlags flags = [flagsNumber unsignedIntValue];
