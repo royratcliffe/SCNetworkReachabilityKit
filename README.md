@@ -29,6 +29,7 @@ For example, set up your app delegate or other controller for detecting general 
 							  object:internetReachability
 							userInfo:userInfo];
 	}
+	[internetReachability startNotifier];
 ```
 
 Your controller can then handle the notifications about Internet reachability like this.
