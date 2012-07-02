@@ -15,22 +15,25 @@ How to use the framework or library? Start by instantiating an instance of `SCNe
 For example, set up your app delegate or other controller for detecting general Internet reachability using:
 
 	SCNetworkReachability *internetReachability = [SCNetworkReachability networkReachabilityForInternet];
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(internetReachabilityDidChange:)
-												 name:kSCNetworkReachabilityDidChangeNotification object:nil];
+	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+	[center addObserver:self
+			   selector:@selector(internetReachabilityDidChange:)
+				   name:kSCNetworkReachabilityDidChangeNotification object:nil];
 	SCNetworkReachabilityFlags flags;
 	if ([internetReachability getFlags:&flags])
 	{
-		[[NSNotificationCenter defaultCenter] postNotificationName:kSCNetworkReachabilityDidChangeNotification
-															object:internetReachability
-														  userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedInt:flags]
-																							   forKey:kSCNetworkReachabilityFlagsKey]];
+		NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedInt:flags]
+															 forKey:kSCNetworkReachabilityFlagsKey];
+		[center postNotificationName:kSCNetworkReachabilityDidChangeNotification
+							  object:internetReachability
+							userInfo:userInfo];
 	}
 
 Your controller can then handle the notifications about Internet reachability like this.
 
 	SCNetworkReachability *reachability = [notification object];
-	SCNetworkReachabilityFlags flags = [[[notification userInfo] objectForKey:kSCNetworkReachabilityFlagsKey] unsignedIntValue];
+	NSNumber *flagsNumber = [[notification userInfo] objectForKey:kSCNetworkReachabilityFlagsKey];
+	SCNetworkReachabilityFlags flags = [flagsNumber unsignedIntValue];
 	SCNetworkReachable reachable = [reachability networkReachableForFlags:flags];
 	NSString *reachableString;
 	switch (reachable)
