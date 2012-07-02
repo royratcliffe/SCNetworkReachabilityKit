@@ -14,6 +14,7 @@ How to use the framework or library? Start by instantiating an instance of `SCNe
 
 For example, set up your app delegate or other controller for detecting general Internet reachability using:
 
+```objective-c
 	SCNetworkReachability *internetReachability = [SCNetworkReachability networkReachabilityForInternet];
 	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
 	[center addObserver:self
@@ -28,9 +29,11 @@ For example, set up your app delegate or other controller for detecting general 
 							  object:internetReachability
 							userInfo:userInfo];
 	}
+```
 
 Your controller can then handle the notifications about Internet reachability like this.
 
+```objective-c
 	SCNetworkReachability *reachability = [notification object];
 	NSNumber *flagsNumber = [[notification userInfo] objectForKey:kSCNetworkReachabilityFlagsKey];
 	SCNetworkReachabilityFlags flags = [flagsNumber unsignedIntValue];
@@ -50,6 +53,7 @@ Your controller can then handle the notifications about Internet reachability li
 		default:
 			reachableString = nil;
 	}
+```
 
 ### Linking With iOS Apps
 
