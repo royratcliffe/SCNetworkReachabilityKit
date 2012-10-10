@@ -374,7 +374,7 @@
 		78A39F9B13F94C9E00A856E2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Pioneering Software, United Kingdom";
 			};
 			buildConfigurationList = 78A39F9E13F94C9E00A856E2 /* Build configuration list for PBXProject "SCNetworkReachabilityKit" */;
@@ -594,6 +594,7 @@
 		78A39FD113F94C9E00A856E2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 19.0;
 				FRAMEWORK_VERSION = A;
@@ -608,6 +609,7 @@
 		78A39FD213F94C9E00A856E2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 19.0;
 				FRAMEWORK_VERSION = A;
@@ -622,6 +624,7 @@
 		78A39FD413F94C9E00A856E2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SCNetworkReachabilityKit/SCNetworkReachabilityKit-Prefix.pch";
@@ -640,6 +643,7 @@
 		78A39FD513F94C9E00A856E2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SCNetworkReachabilityKit/SCNetworkReachabilityKit-Prefix.pch";
