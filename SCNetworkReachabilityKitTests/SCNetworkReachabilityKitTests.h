@@ -22,10 +22,10 @@
 //
 //------------------------------------------------------------------------------
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 #import <SCNetworkReachabilityKit/SCNetworkReachabilityKit.h>
 
-@interface SCNetworkReachabilityKitTests : SenTestCase
+@interface SCNetworkReachabilityKitTests : XCTestCase
 {
 @private
 	SCNetworkReachability *linkLocalReachability;
