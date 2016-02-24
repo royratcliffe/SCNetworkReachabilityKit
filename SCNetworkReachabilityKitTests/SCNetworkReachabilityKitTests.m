@@ -69,7 +69,7 @@
 	XCTAssertNotNil(internetReachability);
 	SCNetworkReachabilityFlags flags;
 	XCTAssertTrue([internetReachability getFlags:&flags]);
-	XCTAssertEqualObjects(CFBridgingRelease(SCNetworkReachabilityCFStringCreateFromFlags(flags)), @"--l----R-");
+	XCTAssertEqualObjects(CFBridgingRelease(SCNetworkReachabilityCFStringCreateFromFlags(flags)), @"-------R-");
 }
 
 - (void)testInternetReachableViaWiFi
